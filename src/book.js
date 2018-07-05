@@ -8,7 +8,7 @@ const Book = (props) => {
     <li>
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ backgroundImage: `url('${thumbnail}')`}}></div>
+          <div className="book-cover" style={{ backgroundImage: `url('${thumbnail}')`, width: 128, height: 193}}></div>
 			  {console.log(thumbnail)}
           <div className="book-shelf-changer">
             <select value={shelf || 'none'} onChange={(event => handleShelfUpdate(props.book, event.target.value))}>
