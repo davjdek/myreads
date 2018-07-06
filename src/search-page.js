@@ -20,7 +20,7 @@ class SearchPage extends Component {
 
   updateResults = (updatedBook, shelf) => {
     const index = this.state.results.indexOf(updatedBook);
-    const newBook = Object.assign({}, updatedBook, { shelf: shelf });
+    const newBook = Object.assign({}, updatedBook, { shelf });
     this.setState({
       results: [
         ...this.state.results.slice(0, index),
@@ -39,10 +39,11 @@ class SearchPage extends Component {
       .then(response => {
         this.props.books.forEach(shelvedBook => {
 			console.log(response);
-          const match = response.find((resultBook) => resultBook.id === shelvedBook.id);
+          const match = Array.isArray(response)?response.find((resultBook) => resultBook.id === shelvedBook.id):null;
           if (match) {
             match.shelf = shelvedBook.shelf;  
           }
+		  else if(!Array.isArray(response)){response = [];}
         })
         this.setState({ results: response });
     });
@@ -61,6 +62,12 @@ class SearchPage extends Component {
             />
           </div>
         </div>
+		{ this.state.results.length === 0 && (
+          <div className="search-books-results">
+            No result
+          </div> 
+        )}
+		
         { this.state.results.length !== 0 && (
           <div className="search-books-results">
             <BookList 
